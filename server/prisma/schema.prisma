@@ -1,0 +1,20 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = "mysql://root:@127.0.0.1:3306/hackathon_ad_store"
+}
+
+model user {
+  id       Int     @id @default(autoincrement())
+  username String  @db.VarChar(50)
+  password String  @db.VarChar(255)
+  role     Boolean @default(false)
+}
+
+model task {
+  id   Int    @id @default(autoincrement())
+  name String @unique @db.VarChar(50)
+}

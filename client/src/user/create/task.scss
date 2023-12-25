@@ -1,0 +1,19 @@
+.header-box {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    text-align: center;
+
+}
+
+button {
+    border-radius: 10px;
+
+    &:hover {
+        background-color: rgb(89, 149, 218);
+    }
+}
+
+input {
+    border-radius: 10px;
+}
