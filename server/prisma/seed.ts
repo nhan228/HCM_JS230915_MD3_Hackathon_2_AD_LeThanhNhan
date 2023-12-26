@@ -1,18 +1,18 @@
-import { PrismaClient } from '@prisma/client';
+import { userRole, PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 (async () => {
-    await prisma.user.createMany({
+    await prisma.users.createMany({
         data: [
             {
                 username: 'admin',
                 password: '123',
-                role: true,
+                role: userRole.admin
             },
             {
-                username: 'member',
+                username: 'user',
                 password: '123',
-                role: false,
+                role: userRole.user,
             },
         ],
     });

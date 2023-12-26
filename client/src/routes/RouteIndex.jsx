@@ -1,14 +1,15 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { lazy } from "../utils"
+import React from 'react';
+import { Route, Routes, BrowserRouter } from "react-router-dom";
+import Home from "../pages/Home.jsx";
+import Authen from "../pages/authen/Authen.jsx";
 
-export default function RouteIndex() {
+export default function RouterIndex() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="authen" element={lazy.lazyFn(() => import("../user/Authen"))()}></Route>
-                {/* <Route path="/register" element={lazy.lazyFn(() => import("../user/register.jsx"))()}></Route> */}
-                <Route path="/task" element={lazy.lazyFn(() => import("../user/create/Task.jsx"))()}></Route>
+                <Route path="/" element={<Home/>} />
+                <Route path="/authen" element={<Authen />} />
             </Routes>
         </BrowserRouter>
-    );
+    )
 }

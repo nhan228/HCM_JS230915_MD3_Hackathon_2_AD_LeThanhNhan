@@ -7,14 +7,20 @@ datasource db {
   url      = "mysql://root:@127.0.0.1:3306/hackathon_ad_store"
 }
 
-model user {
-  id       Int     @id @default(autoincrement())
-  username String  @db.VarChar(50)
-  password String  @db.VarChar(255)
-  role     Boolean @default(false)
+model users {
+  id       Int      @id @default(autoincrement())
+  username String   @unique @db.VarChar(50)
+  password String   @db.VarChar(255)
+  role     userRole @default(user)
 }
 
-model task {
+model tasks {
   id   Int    @id @default(autoincrement())
-  name String @unique @db.VarChar(50)
+  name String @db.Char(255)
+  decs String @db.Text
+}
+
+enum userRole {
+  admin
+  user
 }

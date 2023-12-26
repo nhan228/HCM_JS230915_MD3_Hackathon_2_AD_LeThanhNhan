@@ -1,28 +1,40 @@
-import React from 'react'
-import RouteIndex from './routes/RouteIndex'
-import api from '../src/services/apis'
-import { useEffect } from 'react'
+import React, { useEffect } from 'react'
+import api from "./services"
+import RouterIndex from './routes/RouteIndex'
+import { todoAction } from './store/slices/todo.slice'
+import { userAction } from './store/slices/user.slice'
 import { useDispatch } from 'react-redux'
 
-import { todoAction } from './store/slices/todolist.slice'
-
 export default function App() {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
   useEffect(() => {
-    api.todo.findMany()
-      .then(res => {
-        console.log(res);
-        dispatch(todoAction.setData(res.data));
-      })
-      .catch(err => {
-        console.log("Lỗi data", err);
-      });
+    const fetchData = async () => {
+      try {
+        let result = await api.todo.findAll();
+        console.log('a',result);
+        dispatch(todoAction.setData(result?.data?.data));
+      } catch (err) {
+        console.log('err', err);
+      }
+    };
+    fetchData();
   }, []);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const result = await api.user.decodeToken(localStorage.getItem('token'));
+        if (result.status == 200) {
+          dispatch(userAction.setUser(result?.data?.data));
+        }
+      } catch (err) {
+        localStorage.removeItem('token');
+        dispatch(userAction.setUser(null));
+      }
+    }
+    fetchData()
+  }, [])
   return (
-    <div>
-      <RouteIndex />
-    </div>
-
+    <RouterIndex />
   )
 }

@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const todoSlice = createSlice({
-    name: "todolist",
+    name: "todo",
     initialState: {
         data: null,
     },
@@ -9,25 +9,22 @@ const todoSlice = createSlice({
         setData: (state, action) => {
             state.data = action.payload
         },
-
         addTodo: (state, action) => {
             state.data.push(action.payload)
         },
-        delete: (state, action) => {
-            state.data = state.data.filter(todo => todo.id != action.payload);
-        },
-
         updateTodo: (state, action) => {
-            state.data = state.data.map((todo) => {
-                if (todo.id == action.payload.id) {
-                    return { ...todo, ...action.payload.data };
+            state.data = state.data.map((task) => {
+                if (task.id == action.payload.id) {
+                    return action.payload
                 }
-                return todo;
-            });
-        }
-
+                return task
+            })
+        },
+        deleteTodo: (state, action) => {
+            state.data = state.data.filter(todo => todo.id != action.payload)
+        },
     }
 })
 
 export const todoReducer = todoSlice.reducer;
-export const todoAction = todoSlice.actions;
+export const todoAction = todoSlice.actions
